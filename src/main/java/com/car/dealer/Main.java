@@ -11,5 +11,7 @@ public class Main {
                 new AnnotationConfigApplicationContext(AppConfig.class);
         CarDealer carDealer = (CarDealer) appContext.getBean("carDealer");
         carDealer.init();
+        Calculator calculator = (Calculator) appContext.getBean("calculator");
+        calculator.display();
     }
 }

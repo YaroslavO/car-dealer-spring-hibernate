@@ -1,5 +1,7 @@
 package com.car.dealer.entity;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class Manager {
+public class Manager implements Comparable {
 
     @Id
     @GeneratedValue
@@ -61,5 +63,22 @@ public class Manager {
 
     public void setSalaryForOneSale(Double salaryForOneSale) {
         this.salaryForOneSale = salaryForOneSale;
+    }
+
+    @Override
+    public String toString() {
+        return lastName + " " + firstName;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Manager otherManager = ((Manager) o);
+        int result = 0;
+
+        result += (salaryForOneSale == otherManager.getSalaryForOneSale()) ? 0 : 1;
+        result += (firstName.compareTo(otherManager.getFirstName()) == 0) ? 0 : 1;
+        result += (lastName.compareTo(otherManager.getLastName()) == 0) ? 0 : 1;
+
+        return result;
     }
 }

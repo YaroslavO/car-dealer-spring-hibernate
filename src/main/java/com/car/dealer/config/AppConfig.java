@@ -1,5 +1,6 @@
 package com.car.dealer.config;
 
+import com.car.dealer.Calculator;
 import com.car.dealer.CarDealer;
 import com.car.dealer.dao.CarDao;
 import com.car.dealer.dao.CarDaoImpl;
@@ -22,5 +23,11 @@ public class AppConfig {
     @Autowired
     public CarDealer getCarDealer() {
         return new CarDealer();
+    }
+
+    @Bean(name = "calculator")
+    @Autowired
+    public Calculator getCalculator() {
+        return new Calculator();
     }
 }

@@ -82,6 +82,9 @@ public class CarDealer {
 
         manager = new Manager("Stepan", "Fedoreds", 150.0);
         managerDao.saveManager(manager);
+
+        manager = new Manager("Volodimir", "Clichko", 200.0);
+        managerDao.saveManager(manager);
     }
 
     private void initClient() {
