@@ -3,6 +3,7 @@ package com.car.dealer;
 import com.car.dealer.dao.ClientDao;
 import com.car.dealer.dao.DealDao;
 import com.car.dealer.dao.ManagerDao;
+import com.car.dealer.entity.BestManagerBrand;
 import com.car.dealer.entity.Deal;
 import com.car.dealer.entity.Manager;
 import com.car.dealer.entity.ManagerBrand;
@@ -39,34 +40,41 @@ public class Calculator {
 
         for (Manager currentManager: allManager) {
             List<Deal> allDealForManager = dealDao.getAllDealForManager(currentManager);
-            Set<ManagerBrand> managerBrandSet = getManagerBrandCountMap(currentManager, allDealForManager);
+            displayBastBrandForManager(currentManager, allDealForManager);
+        }
+    }
 
-            ManagerBrand bestManagerBrandOfCount = null;
-            ManagerBrand bestManagerBrandOfPrice = null;
-            int count;
-            int maxCount = 0;
-            double price;
-            double maxPrice = 0;
+    private void displayBastBrandForManager(Manager currentManager, List<Deal> allDealForManager) {
+        Set<ManagerBrand> managerBrandSet = getManagerBrandCountMap(currentManager, allDealForManager);
 
-            for (ManagerBrand mb: managerBrandSet) {
-                count = mb.getCount();
-                price = mb.getPriceOfDeals();
+        BestManagerBrand bestManagerBrand = searchBestBrandForManager(managerBrandSet);
 
-                if (count > maxCount) {
-                    maxCount = count;
-                    bestManagerBrandOfCount = mb;
-                }
+        System.out.println(currentManager.toString());
+        System.out.println(bestManagerBrand.BestCountManagerBrand.toString() + " count = " + bestManagerBrand.count);
+        System.out.println(bestManagerBrand.BestPriceManagerBrand.toString() + " price = " + bestManagerBrand.price);
+    }
 
-                if (price > maxPrice) {
-                    maxPrice = price;
-                    bestManagerBrandOfPrice = mb;
-                }
+    private BestManagerBrand searchBestBrandForManager(Set<ManagerBrand> managerBrandSet) {
+        BestManagerBrand bestManagerBrand = new BestManagerBrand();
+        int count;
+        double price;
+
+        for (ManagerBrand mb: managerBrandSet) {
+            count = mb.getCount();
+            price = mb.getPriceOfDeals();
+
+            if (count > bestManagerBrand.count) {
+                bestManagerBrand.count = count;
+                bestManagerBrand.BestCountManagerBrand = mb;
             }
 
-            System.out.println(currentManager.toString());
-            System.out.println(bestManagerBrandOfCount.toString() + "count = " + maxCount);
-            System.out.println(bestManagerBrandOfPrice.toString() + "price = " + maxPrice);
+            if (price > bestManagerBrand.price) {
+                bestManagerBrand.price = price;
+                bestManagerBrand.BestPriceManagerBrand = mb;
+            }
         }
+
+        return bestManagerBrand;
     }
 
     private Set<ManagerBrand> getManagerBrandCountMap(Manager manager, List<Deal> deals) {
@@ -79,12 +87,7 @@ public class Calculator {
             managerBrand = new ManagerBrand(manager, deal.getCar().getBrand());
             price = deal.getCar().getPrice();
             if (managerBrandSet.contains(managerBrand)) {
-                for (ManagerBrand mb: managerBrandSet) {
-                    if (mb.compareTo(managerBrand) == 0) {
-                        managerBrand = mb;
-                        break;
-                    }
-                }
+                managerBrand = getCurrentManagerBrand(managerBrandSet, managerBrand);
                 managerBrand.setCount(managerBrand.getCount() + 1);
                 profit = managerBrand.getPriceOfDeals();
                 profit += price;
@@ -97,5 +100,15 @@ public class Calculator {
         }
 
         return managerBrandSet;
+    }
+
+    private ManagerBrand getCurrentManagerBrand(TreeSet<ManagerBrand> managerBrandSet, ManagerBrand managerBrand) {
+        for (ManagerBrand mb: managerBrandSet) {
+            if (mb.compareTo(managerBrand) == 0) {
+                managerBrand = mb;
+                break;
+            }
+        }
+        return managerBrand;
     }
 }
