@@ -45,7 +45,7 @@ public class ManagerDaoImpl implements ManagerDao {
         query.setParameter("manager", manager);
 
         Brand brand = (Brand) ((Object[])query.uniqueResult())[0];
-        Integer count = (Integer) ((Object[])query.uniqueResult())[1];
+        Long count = (Long) ((Object[])query.uniqueResult())[1];
 
         return new BrandMaxCount(brand, count);
     }

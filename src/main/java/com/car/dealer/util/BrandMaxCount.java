@@ -7,9 +7,9 @@ import com.car.dealer.entity.Brand;
  */
 public class BrandMaxCount {
     public Brand brand;
-    public Integer count;
+    public Long count;
 
-    public BrandMaxCount(Brand brand, Integer count) {
+    public BrandMaxCount(Brand brand, Long count) {
         this.brand = brand;
         this.count = count;
     }
