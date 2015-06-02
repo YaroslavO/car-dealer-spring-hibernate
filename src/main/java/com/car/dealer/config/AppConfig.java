@@ -1,9 +1,7 @@
 package com.car.dealer.config;
 
-import com.car.dealer.Calculator;
-import com.car.dealer.CarDealer;
-import com.car.dealer.dao.CarDao;
-import com.car.dealer.dao.CarDaoImpl;
+import com.car.dealer.service.ConsoleWriter;
+import com.car.dealer.service.CarDealer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,9 +23,9 @@ public class AppConfig {
         return new CarDealer();
     }
 
-    @Bean(name = "calculator")
+    @Bean(name = "consoleWriter")
     @Autowired
-    public Calculator getCalculator() {
-        return new Calculator();
+    public ConsoleWriter getConsoleWriter() {
+        return new ConsoleWriter();
     }
 }

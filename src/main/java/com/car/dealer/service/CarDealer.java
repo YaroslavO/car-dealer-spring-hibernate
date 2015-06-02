@@ -1,4 +1,4 @@
-package com.car.dealer;
+package com.car.dealer.service;
 
 import com.car.dealer.dao.CarDao;
 import com.car.dealer.dao.ClientDao;
