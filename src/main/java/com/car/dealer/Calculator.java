@@ -1,6 +1,5 @@
 package com.car.dealer;
 
-import com.car.dealer.dao.ClientDao;
 import com.car.dealer.dao.DealDao;
 import com.car.dealer.dao.ManagerDao;
 import com.car.dealer.entity.BestManagerBrand;
